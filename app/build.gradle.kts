@@ -181,7 +181,11 @@ android {
 
             isMinifyEnabled = true
             isShrinkResources = true
-            proguardFiles(getDefaultProguardFile("proguard-android-optimize.txt"), "proguard-rules.pro")
+            // Optimizations currently result in a miscompilation of MediaCodecEncoder.encode()
+            // with AGP 8.2.x and newer. Until this is fixed, let's disable optimizations entirely.
+            //
+            // Upstream bug report: https://issuetracker.google.com/issues/334275655
+            proguardFiles(getDefaultProguardFile("proguard-android.txt"), "proguard-rules.pro")
 
             signingConfig = signingConfigs.getByName("release")
         }
